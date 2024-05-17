@@ -96,25 +96,8 @@ void Application::KdBeginDraw(bool usePostProcess)
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::KdPostDraw()
 {
-	// ImGui開始
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::SetNextWindowPos(ImVec2(20, 20), 2);
-	ImGui::SetNextWindowSize(ImVec2(200, 100), 2);
-	if (ImGui::Begin("WindowName"))
-	{
-		ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
-	}
-	ImGui::End();
-
-	// ImGui Demo ウィンドウ表示
-	ImGui::ShowDemoWindow(nullptr);
-
-	// Imguiのレンダリング : ここより上にimguiの描画はする事
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	// ImGuiの処理
+	ImGuiProcess();
 
 	// BackBuffer -> 画面表示
 	KdDirect3D::Instance().WorkSwapChain()->Present(0, 0);
@@ -366,4 +349,36 @@ void Application::Release()
 
 	// ウィンドウ削除
 	m_window.Release();
+}
+
+void Application::ImGuiProcess()
+{
+	//return;
+	
+	//===================================================================
+	// ImGui開始
+	//===================================================================
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	//===================================================================
+	// ImGui Demo ウィンドウ表示
+	//===================================================================
+
+	ImGui::ShowDemoWindow(nullptr);
+
+	ImGui::SetNextWindowPos(ImVec2(20, 20), 2);
+	ImGui::SetNextWindowSize(ImVec2(200, 100), 2);
+	if (ImGui::Begin("Debug Window"))
+	{
+		ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
+		ImGui::Text(((const char*)u8"日本語表示テスト"));
+	}
+	ImGui::End();
+
+	// Imguiのレンダリング : ここより上にimguiの描画はする事
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }

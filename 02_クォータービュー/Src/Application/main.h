@@ -42,6 +42,9 @@ private:
 	// アプリケーション解放
 	void Release();
 
+	// ImGui
+	void ImGuiProcess();
+
 	// ゲームウィンドウクラス
 	KdWindow		m_window;
 

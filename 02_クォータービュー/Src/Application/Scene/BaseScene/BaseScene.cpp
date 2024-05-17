@@ -19,6 +19,10 @@ void BaseScene::PreUpdate()
 		}
 	}
 
+	for (auto& obj : m_objList)
+	{
+		obj->PreUpdate();
+	}
 	// ↑の後には有効なオブジェクトだけのリストになっている
 }
 
